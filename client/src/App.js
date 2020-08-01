@@ -18,6 +18,15 @@ import Home from './pages/Home';
 //establish new connection to GraphQL server using apollo
 //where one can pass config settings!!
 const client = new ApolloClient({
+  request: operation => {
+    const token = localStorage.getItem('id_token');
+
+    operation.setContext({
+      headers: {
+        authorization: token ? `Bearer ${token}`: ''
+      }
+    });
+  },
   uri: '/graphql'
 })
 
